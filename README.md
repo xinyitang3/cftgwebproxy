@@ -1,6 +1,3 @@
-README
-
-```markdown
 # Cloudflare Telegram Web Proxy 三件套
 
 > ⭐ **如果觉得好用，点个 Star 支持一下～**
