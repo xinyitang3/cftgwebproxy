@@ -5,6 +5,9 @@
 [![Pages](https://img.shields.io/badge/Pages-Main%20Program-F38020?logo=cloudflare)]()
 [![Workers](https://img.shields.io/badge/Workers-Relay%20%7C%20DNS-F38020?logo=cloudflare)]()
 [![License](https://img.shields.io/badge/License-MIT-green)]()
+[![Last Commit](https://img.shields.io/github/last-commit/xinyitang3/cftgwebproxy?label=Last%20Commit)](https://github.com/xinyitang3/cftgwebproxy/commits)
+[![Repo Size](https://img.shields.io/github/repo-size/xinyitang3/cftgwebproxy?label=Repo%20Size)](https://github.com/xinyitang3/cftgwebproxy)
+[![Telegram](https://img.shields.io/badge/Telegram-@MiaChatChannel-26A5E4?logo=telegram)](https://t.me/MiaChatChannel)
 
 > ⭐ **如果觉得好用，点个 Star 支持一下～**
 
