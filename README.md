@@ -28,9 +28,6 @@
 - `BOOT`：建议 ≥16 位随机字符串，推荐 `openssl rand -hex 24` 生成。
 - `SECRET` 支持 `dd` 前缀：启用 MTProxy 随机填充（Random Padding），随机化包长以降低流量特征、增强抗 DPI。
 
-> **来源**：`https://github.com/ToiCF/CF-Workers-TGProxy`
-> **作者**：Alexandre Kojève
-
 ---
 
 ### 2. `webproxy-relay.js`：Worker 转发层（部署到 Worker，建议单独账号）
