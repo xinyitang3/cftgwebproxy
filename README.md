@@ -1,4 +1,4 @@
-# Telegram Web Proxy 三件套（Pages主程序 + Worker转发 + DNS自动解析）
+# Cloudflare Telegram Web Proxy
 
 [![GitHub stars](https://img.shields.io/github/stars/xinyitang3/cftgwebproxy?style=social)](https://github.com/xinyitang3/cftgwebproxy/stargazers)
 [![Platform](https://img.shields.io/badge/Platform-Cloudflare%20Edge-F38020?logo=cloudflare)]()
