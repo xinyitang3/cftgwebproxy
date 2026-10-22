@@ -21,47 +21,49 @@
 
 ## 🚀 部署步骤
 
-### 1. `telegram_webproxy.js`：Telegram Web Proxy主程序（部署到 Pages，建议单独账号）
+1. telegram_webproxy.js：Telegram Web Proxy 主程序
 
-环境变量均用**密钥方式**：
-· `SECRET`：32 位小写十六进制（0-9a-f），推荐 `openssl rand -hex 16` 生成。
-· `BOOT`：建议 ≥16 位随机字符串，推荐 `openssl rand -hex 24` 生成。
-· `SECRET` 支持 `dd` 前缀：启用 MTProxy 随机填充（Random Padding），随机化包长以降低流量特征、增强抗 DPI。
+部署到 Pages，建议单独账号。
 
-> **来源**：`https://github.com/ToiCF/CF-Workers-TGProxy`
+环境变量均用密钥方式：
 
----
+SECRET：32 位小写十六进制（0-9a-f），推荐 openssl rand -hex 16 生成。
+BOOT：建议 ≥16 位随机字符串，推荐 openssl rand -hex 24 生成。
+SECRET 支持 dd 前缀：启用 MTProxy 随机填充（Random Padding），随机化包长以降低流量特征、增强抗 DPI。
+来源：https://github.com/ToiCF/CF-Workers-TGProxy
+作者：Alexandre Kojève (https://t.me/Alexandre_Kojeve)
 
-### 2. `webproxy-relay.js`：Worker 转发层（部署到 Worker，建议单独账号）
+2. webproxy-relay.js：Worker 转发层
 
-**作用**：转发到 Pages 上的 Telegram Web Proxy主程序。
+部署到 Worker，建议单独账号。
 
-环境变量用**密钥方式**：
-· `SECRET`：必须和Telegram Web Proxy主程序的 SECRET 完全一致。
-· 代码中的 `TARGET_HOST` 填 Pages 上的 Telegram Web Proxy主程序域名（只填域名，不带 `https://` 和路径）。
+作用：转发到 Pages 上的 Telegram Web Proxy 主程序。
 
+环境变量用密钥方式：
+
+SECRET：必须和 Telegram Web Proxy 主程序的 SECRET 完全一致。
+代码中的 TARGET_HOST 填 Pages 上的 Telegram Web Proxy 主程序域名（只填域名，不带 https:// 和路径）。
 用 Worker 路由方式接入你的优选域名：Worker 路由支持根域名和通配子域名，可按实际需要添加：
-· `你的优选域名/*`：对应 `@` 根域名；
-· `*.你的优选域名/*`：对应 `*` 通配子域名。
 
-> [!WARNING]
-> 注意：你的优选域名所在的 Zone 必须与该 Worker 同一个 Cloudflare 账号，否则无法添加路由。
+你的优选域名/*：对应 @ 根域名；
+*.你的优选域名/*：对应 * 通配子域名。
+⚠️ 注意：你的优选域名所在的 Zone 必须与该 Worker 同一个 Cloudflare 账号，否则无法添加路由。
 
----
+3. domain-dns.js：优选 IP 自动 DNS 解析
 
-### 3. `domain-dns.js`：优选 IP 自动 DNS 解析（部署到 Worker，账号单独/共用）
+部署到 Worker，账号单独/共用。
 
-**修改代码**：
-· `IP_SOURCE_URL`：填你的优选 IP API 地址；返回文本每行 `IP:Port`（可带注释）。
-· `你的优选域名`：填你的实际优选域名；建议用编辑器“全局替换”，避免因 `.` 号而改错。
+修改代码：
 
-**环境变量**：
-· `CF_API_TOKEN`：**密钥方式**，需有你的优选域名 Zone DNS 编辑权限。
-· `CF_ZONE_ID`：**文本方式**，填你的优选域名 Zone ID。
+IP_SOURCE_URL：填你的优选 IP API 地址；返回文本每行 IP:Port（可带注释）。
+你的优选域名：填你的实际优选域名；建议用编辑器“全局替换”，避免因 . 号而改错。
+环境变量：
 
-**添加 Cron 触发器**，自动把 API 中端口为 `443` 的 IP 写入优选域名的 A 记录，实现自动优选。
+CF_API_TOKEN：密钥方式，需有你的优选域名 Zone DNS 编辑权限。
+CF_ZONE_ID：文本方式，填你的优选域名 Zone ID。
+添加 Cron 触发器，自动把 API 中端口为 443 的 IP 写入优选域名的 A 记录，实现自动优选。
 
-`RECORD_NAMES` 中的 `'你的优选域名'` 和 `'*.你的优选域名'` 会分别生成 `@` 根域名和 `*` 通配子域名的 A 记录。
+RECORD_NAMES 中的 '你的优选域名' 和 '*.你的优选域名' 会分别生成 @ 根域名和 * 通配子域名的 A 记录。
 
 ---
 
