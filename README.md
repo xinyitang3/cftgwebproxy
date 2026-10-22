@@ -8,7 +8,7 @@
 
 > ⭐ **如果觉得好用，点个 Star 支持一下～**
 
-基于 **Cloudflare Pages** + **Worker** + **DNS 自动解析** 的 Telegram Web Proxy 代理方案。主程序运行于 Pages 规避 Worker 直连易触发的 1101/522 错误，Worker 仅作转发层并承接 Pages 无法路由的优选域名，配合自动 DNS 解析，实现高可用、稳定的接入。
+基于 **Cloudflare Pages** + **Worker** + **DNS 自动解析** 的 Telegram Web Proxy 代理方案。主程序运行于 Pages 规避 Worker 直接代理易触发的 1101/522 错误，Worker 仅作转发层并承接 Pages 无法路由的优选域名，配合自动 DNS 解析，实现高可用、稳定的接入。
 
 ---
 
