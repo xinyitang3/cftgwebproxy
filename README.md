@@ -31,7 +31,7 @@
 - `BOOT`：建议 ≥16 位随机字符串，推荐 `openssl rand -hex 24` 生成。
 
 > [!TIP]
-> **关于 SECRET 前缀**：`SECRET` 支持 `dd` 前缀：启用 MTProxy 随机填充（Random Padding），随机化包长以降低流量特征、增强抗 DPI。
+> **关于前缀**：`SECRET` 支持 `dd` 前缀：启用 MTProxy 随机填充（Random Padding），随机化包长以降低流量特征、增强抗 DPI。
 
 > [!IMPORTANT]
 > **文件名变更提示**：在 Cloudflare Pages 中部署时，请务必将本文件重命名为 **`_worker.js`** 后再上传至根目录。这是 Pages 识别 Functions 代码的强制要求。
