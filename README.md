@@ -24,14 +24,14 @@
 
 ## 🚀 部署步骤
 
-### 1. `telegram_webproxy.js`：Telegram Web Proxy主程序（部署到 Pages，建议单独账号）
+### 1. `telegram_webproxy.js`：Telegram Web Proxy 主程序（部署到 Pages，建议单独账号）
 
 环境变量均用**密钥方式**：
 - `SECRET`：32 位小写十六进制（0-9a-f），推荐 `openssl rand -hex 16` 生成。
 - `BOOT`：建议 ≥16 位随机字符串，推荐 `openssl rand -hex 24` 生成。
 
 > [!TIP]
-> **关于 `dd` 前缀**：`SECRET` 支持 `dd` 前缀：启用 MTProxy 随机填充（Random Padding），随机化包长以降低流量特征、增强抗 DPI。
+> **关于 `dd` 前缀**：`SECRET` 支持 `dd` 前缀，用于启用 MTProxy 随机填充（Random Padding），随机化包长以降低流量特征、增强抗 DPI。
 
 > [!IMPORTANT]
 > **文件名变更提示**：在 Cloudflare Pages 中部署时，请务必将本文件重命名为 **`_worker.js`** 后再上传至根目录。这是 Pages 识别 Functions 代码的强制要求。
@@ -40,13 +40,13 @@
 
 ### 2. `webproxy-relay.js`：Worker 转发层（部署到 Worker，建议单独账号）
 
-> 转发到 Pages 上的 Telegram Web Proxy主程序。
+> 转发到 Pages 上的 Telegram Web Proxy 主程序。
 
 **修改代码**：
-- `TARGET_HOST`：填 Pages 上的 Telegram Web Proxy主程序域名（只填域名，不带 `https://` 和路径）。
+- `TARGET_HOST`：填 Pages 上的 Telegram Web Proxy 主程序域名（只填域名，不带 `https://` 和路径）。
 
 环境变量用**密钥方式**：
-- `SECRET`：必须和 Telegram Web Proxy主程序的 SECRET 完全一致。
+- `SECRET`：必须和 Telegram Web Proxy 主程序的 SECRET 完全一致。
 
 用 Worker 路由方式接入你的优选域名：Worker 路由支持根域名和通配子域名，可按实际需要添加：
 - `你的优选域名/*`：对应 `@` 根域名；
@@ -61,7 +61,7 @@
 
 **修改代码**：
 - `IP_SOURCE_URL`：填你的优选 IP API 地址；返回文本每行 `IP:Port`（可带注释）。
-- `你的优选域名`：填你的实际优选域名；`RECORD_NAMES` 会分别生成 `@` 根域名和 `*` 通配子域名的 A 记录。
+- `ZONE_ROOT`：填你的实际优选域名；`RECORD_NAMES` 会分别生成 `@` 根域名和 `*` 通配子域名的 A 记录。
 
 **环境变量**：
 - `CF_API_TOKEN`：**密钥方式**，需有你的优选域名 Zone DNS 编辑权限。
