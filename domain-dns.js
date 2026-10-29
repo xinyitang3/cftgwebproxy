@@ -3,8 +3,8 @@ const ZONE_VAR = 'CF_ZONE_ID';
 
 const ZONE_ROOT = '你的优选域名';
 const RECORD_NAMES = [
-  { label: '@', fqdn: '你的优选域名' },
-  { label: '*', fqdn: '*.你的优选域名' }
+  { label: '@', fqdn: ZONE_ROOT },
+  { label: '*', fqdn: `*.${ZONE_ROOT}` }
 ];
 
 async function fetchTargetIPs() {
