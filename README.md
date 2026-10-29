@@ -40,7 +40,7 @@
 
 ### 2. `webproxy-relay.js`：Worker 转发层（部署到 Worker，建议单独账号）
 
-**作用**：转发到 Pages 上的 Telegram Web Proxy主程序。
+> 转发到 Pages 上的 Telegram Web Proxy主程序。
 
 **修改代码**：
 - `TARGET_HOST`：填 Pages 上的 Telegram Web Proxy主程序域名（只填域名，不带 `https://` 和路径）。
