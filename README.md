@@ -40,11 +40,11 @@
 
 **作用**：转发到 Pages 上的 Telegram Web Proxy主程序。
 
-环境变量用**密钥方式**：
-- `SECRET`：必须和Telegram Web Proxy主程序的 SECRET 完全一致。
-
 **修改代码**：
 - `TARGET_HOST`：填 Pages 上的 Telegram Web Proxy主程序域名（只填域名，不带 `https://` 和路径）。
+
+环境变量用**密钥方式**：
+- `SECRET`：必须和Telegram Web Proxy主程序的 SECRET 完全一致。
 
 用 Worker 路由方式接入你的优选域名：Worker 路由支持根域名和通配子域名，可按实际需要添加：
 - `你的优选域名/*`：对应 `@` 根域名；
