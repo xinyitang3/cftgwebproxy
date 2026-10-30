@@ -59,7 +59,7 @@
 
 **修改代码**：
 - `IP_SOURCE_URL`：填你的优选 IP API 地址；返回文本每行 `IP:Port`（可带注释）。
-- `ZONE_ROOT`：填你的实际优选域名；`RECORD_NAMES` 会分别生成 `@` 根域名和 `*` 通配子域名的 A 记录。
+- `ZONE_ROOT`：填你的优选域名；`RECORD_NAMES` 会分别生成 `@` 根域名和 `*` 通配子域名的 A 记录。
 
 **环境变量**：
 - `CF_ZONE_ID`：**文本方式**，填你的优选域名 Zone ID。
@@ -75,14 +75,14 @@
 Telegram 客户端 → 你的优选域名 → Worker 转发层（webproxy-relay.js）→ Pages 主程序（telegram_webproxy.js）→ Telegram 服务器（KWS/DC）
 ```
 
-**Telegram客户端代理填写**：服务器 = 优选域名，密钥 = SECRET（与主程序/转发层一致）。
+**Telegram客户端代理填写**：服务器 = 你的优选域名，密钥 = SECRET（与主程序/转发层一致）。
 
 ---
 
 ## 💡 分开部署的原因
 
 - **Pages 主程序**：避开 Worker 直接代理易触发的 1101/522；Pages 和 Worker 的请求额度分开计算。
-- **Worker 转发层**：仅作转发层降低 1101/522 风险，并让优选域名能通过 Worker 路由接入。
+- **Worker 转发层**：仅作转发层降低 1101/522 风险，并让你的优选域名能通过 Worker 路由接入。
 
 ---
 
