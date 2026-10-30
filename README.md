@@ -43,7 +43,7 @@
 > 转发到 Pages 上的 Telegram Web Proxy 主程序。
 
 **环境变量**：
-- `HOST`：**文本方式**，填 Pages 上的 Telegram Web Proxy 主程序域名（只填域名，不带 `https://` 和路径）。
+- `HOST`：**文本方式**，填 Pages 上的 Telegram Web Proxy 主程序默认域名（`*.pages.dev`，不要填自定义域名）。
 - `SECRET`：**密钥方式**，必须和 Telegram Web Proxy 主程序的 SECRET 完全一致。
 
 用 Worker 路由方式接入你的优选域名：Worker 路由支持根域名和通配子域名，可按实际需要添加：
