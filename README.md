@@ -42,9 +42,6 @@
 
 > 转发到 Pages 上的 Telegram Web Proxy 主程序。
 
-**修改代码**：
-
-
 **环境变量**：
 - `HOST`：**文本方式**，填 Pages 上的 Telegram Web Proxy 主程序域名（只填域名，不带 `https://` 和路径）。
 - `SECRET`：**密钥方式**，必须和 Telegram Web Proxy 主程序的 SECRET 完全一致。
