@@ -1,5 +1,3 @@
-const TARGET_HOST = '你的Pages域名';
-
 const txt = new TextEncoder();
 const hex = v => Uint8Array.from({ length: v.length / 2 }, (_, i) =>
   Number.parseInt(v.slice(i * 2, i * 2 + 2), 16));
@@ -34,6 +32,9 @@ async function mkCap(secret, host) {
 
 export default {
   async fetch(request, env) {
+    let rawHost = String(env.HOST || '').trim();
+    rawHost = rawHost.replace(/^https?:\/\//i, ''); 
+    const HOST = rawHost.split('/')[0].split(':')[0];
     const url = new URL(request.url);
     const originalHost = url.hostname;
 
@@ -45,13 +46,13 @@ export default {
           let diff = cand.length ^ want.length;
           for (let i = 0; i < want.length; i++) diff |= cand.charCodeAt(i) ^ want.charCodeAt(i);
           if (diff === 0) {
-            url.search = `?bridge=${await mkCap(env.SECRET, TARGET_HOST)}`;
+            url.search = `?bridge=${await mkCap(env.SECRET, HOST)}`;
           }
         } catch {}
       }
     }
 
-    url.hostname = TARGET_HOST;
+    url.hostname = HOST;
     url.port = '';
     url.protocol = 'https:';
 
@@ -64,7 +65,7 @@ export default {
       if (incomingOrigin && incomingOrigin !== `https://${originalHost}`) {
         return new Response(null, { status: 404 });
       }
-      if (incomingOrigin) headers.set('Origin', `https://${TARGET_HOST}`);
+      if (incomingOrigin) headers.set('Origin', `https://${HOST}`);
     }
 
     let response;
@@ -82,7 +83,7 @@ export default {
 
     if (response.status >= 300 && response.status < 400 && h.has('Location')) {
       const u = new URL(h.get('Location'), url);
-      if (u.hostname === TARGET_HOST) {
+      if (u.hostname === HOST) {
         u.hostname = originalHost; u.port = ''; u.protocol = 'https:';
       }
       h.set('Location', u.toString());
@@ -96,11 +97,11 @@ export default {
     if (ct.includes('text/html') && request.method !== 'HEAD') {
       let text = await response.text();
       text = text
-        .replaceAll(`https://${TARGET_HOST}`, `https://${originalHost}`)
-        .replaceAll(`wss://${TARGET_HOST}`, `wss://${originalHost}`);
+        .replaceAll(`https://${HOST}`, `https://${originalHost}`)
+        .replaceAll(`wss://${HOST}`, `wss://${originalHost}`);
       const csp = h.get('Content-Security-Policy');
       if (csp) h.set('Content-Security-Policy',
-        csp.replaceAll(`wss://${TARGET_HOST}`, `wss://${originalHost}`));
+        csp.replaceAll(`wss://${HOST}`, `wss://${originalHost}`));
       h.delete('Content-Length');
       h.delete('Content-Encoding');
       h.delete('ETag');
