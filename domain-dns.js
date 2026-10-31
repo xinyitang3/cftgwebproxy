@@ -1,14 +1,13 @@
-const IP_SOURCE_URL = '你的优选IP API地址';
-const ZONE_VAR = 'CF_ZONE_ID';
+const URL = '你的优选IP API地址';
 
-const ZONE_ROOT = '你的优选域名';
+const DOMAIN = '你的优选域名';
 const RECORD_NAMES = [
-  { label: '@', fqdn: ZONE_ROOT },
-  { label: '*', fqdn: `*.${ZONE_ROOT}` }
+  { label: '@', fqdn: DOMAIN },
+  { label: '*', fqdn: `*.${DOMAIN}` }
 ];
 
 async function fetchTargetIPs() {
-  const resp = await fetch(IP_SOURCE_URL);
+  const resp = await fetch(URL);
   if (!resp.ok) {
     throw new Error(`拉取 IP 源失败: HTTP ${resp.status}`);
   }
@@ -44,7 +43,7 @@ async function getCurrentARecords(env, zoneId, fqdn) {
     const url = `https://api.cloudflare.com/client/v4/zones/${zoneId}/dns_records?type=A&name=${encodeURIComponent(fqdn)}&page=${page}&per_page=${perPage}`;
     const resp = await fetch(url, {
       headers: {
-        'Authorization': `Bearer ${env.CF_API_TOKEN}`,
+        'Authorization': `Bearer ${env.API_TOKEN}`,
         'Content-Type': 'application/json'
       }
     });
@@ -67,7 +66,7 @@ async function deleteRecord(env, zoneId, recordId) {
   const url = `https://api.cloudflare.com/client/v4/zones/${zoneId}/dns_records/${recordId}`;
   const resp = await fetch(url, {
     method: 'DELETE',
-    headers: { 'Authorization': `Bearer ${env.CF_API_TOKEN}` }
+    headers: { 'Authorization': `Bearer ${env.API_TOKEN}` }
   });
   const body = await resp.json();
   if (!body.success && !body.errors?.some(e => e.code === 81044)) {
@@ -80,7 +79,7 @@ async function createARecord(env, zoneId, fqdn, ip) {
   const resp = await fetch(url, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${env.CF_API_TOKEN}`,
+      'Authorization': `Bearer ${env.API_TOKEN}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
@@ -145,7 +144,7 @@ async function syncDNS(env) {
   const results = [];
   for (const rec of RECORD_NAMES) {
     try {
-      const r = await syncOneRecord(env, env[ZONE_VAR], targetIPs, rec);
+      const r = await syncOneRecord(env, env.ZONE_ID, targetIPs, rec);
       results.push(r);
     } catch (e) {
       results.push({ name: rec.label, status: '失败', errors: [e.message] });
@@ -164,7 +163,7 @@ async function syncDNS(env) {
 
 export default {
   async fetch(request, env, ctx) {
-    if (!env.CF_API_TOKEN) return new Response('缺少 CF_API_TOKEN', { status: 500 });
+    if (!env.API_TOKEN) return new Response('缺少 API_TOKEN', { status: 500 });
     try {
       const res = await syncDNS(env);
       return new Response(JSON.stringify(res, null, 2), {
@@ -177,7 +176,7 @@ export default {
   },
 
   async scheduled(controller, env, ctx) {
-    if (!env.CF_API_TOKEN || !env[ZONE_VAR]) return;
+    if (!env.API_TOKEN || !env.ZONE_ID) return;
     ctx.waitUntil(syncDNS(env));
   }
 };
