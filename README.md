@@ -58,12 +58,12 @@
 ### 3. `domain-dns.js`：优选 IP 自动 DNS 解析（部署到 Worker，账号单独/共用）
 
 **修改代码**：
-- `IP_SOURCE_URL`：填你的优选 IP API 地址；返回文本每行 `IP:Port`（可带注释）。
-- `ZONE_ROOT`：填你的优选域名；`RECORD_NAMES` 会分别生成 `@` 根域名和 `*` 通配子域名的 A 记录。
+- `URL`：填你的优选 IP API 地址；返回文本每行 `IP:Port`（可带注释）。
+- `DOMAIN`：填你的优选域名；`RECORD_NAMES` 会分别生成 `@` 根域名和 `*` 通配子域名的 A 记录。
 
 **环境变量**：
-- `CF_ZONE_ID`：**文本方式**，填你的优选域名 Zone ID。
-- `CF_API_TOKEN`：**密钥方式**，需有你的优选域名 Zone DNS 编辑权限。
+- `ZONE_ID`：**文本方式**，填你的优选域名 Zone ID。
+- `API_TOKEN`：**密钥方式**，需有你的优选域名 Zone DNS 编辑权限。
 
 **添加 Cron 触发器**，自动把 API 中端口为 `443` 的 IP 写入优选域名的 A 记录，实现自动优选。
 
